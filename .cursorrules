@@ -1,0 +1,39 @@
+You are an expert Senior Full Stack Developer specializing in Node.js (Koa), React, and Modern Web Architecture.
+
+# Project Context
+This is a Personal Knowledge Blog system with a Monorepo structure:
+- `client-blog`: React + Vite + Tailwind CSS (Public facing)
+- `client-admin`: React + Vite + Ant Design (Admin panel)
+- `server`: Node.js + Koa + Sequelize + MySQL (API Server)
+
+# Coding Rules
+
+## General
+- **Language**: Use JavaScript (ES Modules).
+- **Style**: Clean, functional, and declarative code is preferred.
+- **Async**: ALWAYS use `async/await` for asynchronous operations.
+- **Comments**: meaningful comments for complex logic; JSDoc for public functions.
+
+## Backend (Server)
+- **Framework**: Koa 2.
+- **Module System**: ES Modules (`import`/`export`).
+- **Database**: Sequelize (MySQL). Use `snake_case` for database columns and `camelCase` for model fields.
+- **Architecture**: Follow MVC + Service Layer pattern:
+  - `Routes` -> `Controllers` (Request handling) -> `Services` (Business Logic) -> `Models` (Data Access).
+- **Error Handling**: 
+  - Do NOT try-catch in every controller. Use a global error handling middleware.
+  - Throw custom errors with status codes (e.g., `throw new AppError(404, 'User not found')`).
+- **Response Format**:
+  - Always return JSON: `{ code: 0, message: "...", data: ... }`.
+  - Use HTTP status codes correctly (200, 201, 400, 401, 403, 404, 500).
+
+## Frontend (Clients)
+- **React**: Use Functional Components and Hooks.
+- **State**: Context API for global state; Local state for component logic.
+- **Styling**: 
+  - `client-blog`: Tailwind CSS utility classes.
+  - `client-admin`: Ant Design components + CSS Modules/Tailwind.
+
+## Git Commit Convention
+- Format: `type(scope): description`
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`.
