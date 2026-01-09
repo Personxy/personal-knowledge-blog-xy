@@ -10,7 +10,7 @@ export const login = async (ctx) => {
 
   const user = await userService.getUserByUsername(username);
   if (!user || !(await user.validPassword(password))) {
-    throw new AppError(401, 'Invalid credentials');
+    throw new AppError(401, 'Incorrect username or password');
   }
 
   const token = jwt.sign(
