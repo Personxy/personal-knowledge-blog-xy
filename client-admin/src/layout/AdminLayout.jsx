@@ -37,6 +37,14 @@ const AdminLayout = () => {
     },
   ];
 
+  // Helper function to get the selected key based on current path
+  const getSelectedKey = (pathname) => {
+    if (pathname.startsWith('/articles')) {
+      return '/articles';
+    }
+    return pathname;
+  };
+
   return (
     <Layout className="h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -46,7 +54,7 @@ const AdminLayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          selectedKeys={[location.pathname]}
+          selectedKeys={[getSelectedKey(location.pathname)]}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
         />
