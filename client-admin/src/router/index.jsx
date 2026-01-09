@@ -1,17 +1,10 @@
 import React from 'react';
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Login from '../pages/Login';
 import Dashboard from '../pages/Dashboard';
 import ArticleList from '../pages/ArticleList';
 import AdminLayout from '../layout/AdminLayout';
-
-const PrivateRoute = ({ children }) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    return <Navigate to="/login" replace />;
-  }
-  return children;
-};
+import PrivateRoute from '../components/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -35,13 +28,14 @@ const router = createBrowserRouter([
         element: <ArticleList />,
       },
       // Placeholder for create/edit
+      // 创建/编辑页面的占位符
       {
         path: 'articles/create',
-        element: <div>Create Article Page (To Be Implemented)</div>,
+        element: <div>创建文章页面（待实现）</div>,
       },
       {
         path: 'articles/edit/:id',
-        element: <div>Edit Article Page (To Be Implemented)</div>,
+        element: <div>编辑文章页面（待实现）</div>,
       },
     ],
   },

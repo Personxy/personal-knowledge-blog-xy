@@ -6,9 +6,9 @@ const { Title, Paragraph } = Typography;
 const Dashboard = () => {
   return (
     <div>
-      <Title level={2}>Welcome to Admin Dashboard</Title>
+      <Title level={2}>欢迎来到管理后台</Title>
       <Paragraph>
-        Here you can manage your blog articles, categories, and tags.
+        在这里你可以管理你的博客文章、分类和标签。
       </Paragraph>
     </div>
   );

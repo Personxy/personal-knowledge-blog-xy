@@ -14,13 +14,20 @@ const ArticleList = () => {
     setLoading(true);
     try {
       const res = await getArticles({ page, pageSize });
-      // Adjust based on actual API response structure
-      // Assuming { items: [], total: 100 } or { data: [], meta: { total: 100 } }
-      const list = res.items || res.data || [];
-      const total = res.total || res.meta?.total || 0;
       
-      setData(list);
-      setPagination({ ...pagination, current: page, pageSize, total });
+      // Response structure: { code: 0, data: { items: [], total: 0 }, ... }
+      // 响应结构: { code: 0, data: { items: [], total: 0 }, ... }
+      if (res && res.data) {
+        setData(res.data.items || []);
+        setPagination({ 
+          ...pagination, 
+          current: page, 
+          pageSize, 
+          total: res.data.total || 0 
+        });
+      } else {
+        setData([]);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -34,15 +41,15 @@ const ArticleList = () => {
 
   const handleDelete = (id) => {
     Modal.confirm({
-      title: 'Are you sure delete this article?',
-      content: 'This action cannot be undone.',
-      okText: 'Yes',
+      title: '确认删除这篇文章吗？',
+      content: '此操作不可逆。',
+      okText: '是',
       okType: 'danger',
-      cancelText: 'No',
+      cancelText: '否',
       onOk: async () => {
         try {
           await deleteArticle(id);
-          message.success('Article deleted successfully');
+          message.success('文章删除成功');
           fetchData(pagination.current, pagination.pageSize);
         } catch (error) {
           console.error(error);
@@ -53,34 +60,34 @@ const ArticleList = () => {
 
   const columns = [
     {
-      title: 'Title',
+      title: '标题',
       dataIndex: 'title',
       key: 'title',
     },
     {
-      title: 'Category',
+      title: '分类',
       dataIndex: 'category',
       key: 'category',
       render: (cat) => cat?.name || '-',
     },
     {
-      title: 'Status',
+      title: '状态',
       dataIndex: 'status',
       key: 'status',
       render: (status) => (
         <Tag color={status === 1 ? 'green' : 'orange'}>
-          {status === 1 ? 'Published' : 'Draft'}
+          {status === 1 ? '已发布' : '草稿'}
         </Tag>
       ),
     },
     {
-      title: 'Created At',
+      title: '创建时间',
       dataIndex: 'created_at',
       key: 'created_at',
       render: (text) => new Date(text).toLocaleString(),
     },
     {
-      title: 'Action',
+      title: '操作',
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
@@ -89,7 +96,7 @@ const ArticleList = () => {
             icon={<EditOutlined />} 
             onClick={() => navigate(`/articles/edit/${record.id}`)}
           >
-            Edit
+            编辑
           </Button>
           <Button 
             type="text" 
@@ -97,7 +104,7 @@ const ArticleList = () => {
             icon={<DeleteOutlined />} 
             onClick={() => handleDelete(record.id)}
           >
-            Delete
+            删除
           </Button>
         </Space>
       ),
@@ -111,13 +118,13 @@ const ArticleList = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Articles</h2>
+        <h2 className="text-xl font-bold">文章列表</h2>
         <Button 
           type="primary" 
           icon={<PlusOutlined />} 
           onClick={() => navigate('/articles/create')}
         >
-          New Article
+          新建文章
         </Button>
       </div>
       <Table

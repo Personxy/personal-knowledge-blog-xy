@@ -28,12 +28,12 @@ const AdminLayout = () => {
     {
       key: '/',
       icon: <DashboardOutlined />,
-      label: 'Dashboard',
+      label: '仪表盘',
     },
     {
       key: '/articles',
       icon: <FileTextOutlined />,
-      label: 'Articles',
+      label: '文章管理',
     },
   ];
 
@@ -41,7 +41,7 @@ const AdminLayout = () => {
     <Layout className="h-screen">
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="h-16 m-4 bg-white/20 rounded flex items-center justify-center text-white text-lg font-bold truncate">
-          {collapsed ? 'Blog' : 'Knowledge Blog'}
+          {collapsed ? '博客' : '知识博客'}
         </div>
         <Menu
           theme="dark"
@@ -73,7 +73,7 @@ const AdminLayout = () => {
             }}
           />
           <Button icon={<LogoutOutlined />} onClick={handleLogout}>
-            Logout
+            退出登录
           </Button>
         </Header>
         <Content
